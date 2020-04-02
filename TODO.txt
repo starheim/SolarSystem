@@ -1,0 +1,14 @@
+Solar System Web Application
+
+First to be implemented:
+ - Gravity
+ - Two bodies
+ - Let them move over time
+ - Host it on starheim.net
+
+Further ideas:
+ - Introduce spaceship
+   - Must use energy to move
+   - Can pick up energy and power ups
+   
+ - Multiplayer?

@@ -20,31 +20,35 @@ function run(){
     createObjects();
 
     setInterval(function(){
-        //ctx.fillText("REEEEE, WORK YOU SHIT", 10, 50); 
+        ctx.fillStyle = "black";
+        ctx.clearRect(0,0,width,height);
+
+        ctx.fillStyle = "orange";
+        ctx.fillText("The Solar System", width/2-90, 50); 
+
         drawObjects(); 
         updateForcesOnObject();
         updatePositionOfObjects();
-        ctx.fillStyle = "black";
-        //ctx.clearRect(0,0,width,height);
+
     },refreshRateMilliSeconds);
 }
 
 function createObjects(){
     //Instantiate solar system objects
-    bodies.push(new SolarSystemObject(width/2, height/2, 16, 40, "yellow")); //The Sun
+    bodies.push(new SolarSystemObject(width/2, height/2, 1600, 40, "yellow")); //The Sun
 
     bodies.push(new SolarSystemObject(width/2 - 50, height/2, 1, 5, "#cd7f32"));  //Mercury
     bodies.push(new SolarSystemObject(width/2 - 100, height/2, 10, 9, "orange"));   //Venus
     bodies.push(new SolarSystemObject(width/2 - 150, height/2, 20, 10, "blue"));   //Earth
     bodies.push(new SolarSystemObject(width/2 - 225, height/2, 5, 5, "red"));   //Mars
-    bodies.push(new SolarSystemObject(width/2 - 400, height/2, 100, 15, "brown"));   //Jupiter
+    bodies.push(new SolarSystemObject(width/2 - 400, height/2, 50, 15, "brown"));   //Jupiter
     
     //Set initial velocity of planets
-    bodies[1].vy = 0.64;
-    bodies[2].vy = 0.8;
-    bodies[3].vy = 1.2;
-    bodies[4].vy = 1.7;
-    bodies[5].vy = 2.3;
+    bodies[1].vy = 2;
+    bodies[2].vy = 1.5;
+    bodies[3].vy = 0.8;
+    bodies[4].vy = 0.7;
+    bodies[5].vy = 0.5;
 }
 
 function drawObjects(){
@@ -61,7 +65,6 @@ function updateForcesOnObject(){
             if(i != n){
                 bodies[i].attraction(bodies[n]);
             }
-            ctx.fillText("REEEEE, WORK YOU SHIT " + bodies.length, 10, 50); 
         }
     }
 }
@@ -84,21 +87,18 @@ function SolarSystemObject(x, y, m, d, col){
     this.col = col;
 
     this.attraction = function(otherObject){ 
-        var r = Math.sqrt();
         var r = this.distance(otherObject);
         var f = 0;
         if(r != 0) {
-            f = (G*this.m *otherObject.m)/(Math.pow(r, 2));
+            f = (G*this.m*otherObject.m)/(Math.pow(r, 2));
         }
         var angle = Math.atan2(otherObject.py-this.py, otherObject.px-this.px);
         this.fx += f*Math.cos(angle);
-        this.fy += f*Math.cos(angle);    
+        this.fy += f*Math.sin(angle);    
     };
 
     this.distance = function(otherObject){ 
-        return Math.sqrt(
-            Math.pow((this.px-otherObject.px), 2) 
-            + Math.pow((this.py-otherObject.py), 2));
+        return Math.hypot(this.px-otherObject.px, this.py-otherObject.py);
     };
 
     this.update = function(){
@@ -111,15 +111,16 @@ function SolarSystemObject(x, y, m, d, col){
 
     this.drawObject = function(ctx, i){
 
-        ctx.fillStyle = this.col;
+        //Stats about all objects in the system
+        /*ctx.fillStyle = this.col;
         ctx.fillText("IS IT WORKING NOW???? " + 
         " heigth: " + height + 
         " width: " + width + 
         " mass: " + this.m + 
         " diameter: " + this.d + 
-        " position x: " +  this.px + 
-        " position y:" + this.py
-        , 10, 150 + 30 * i); 
+        "  fx: " +  this.fx + 
+        " fy:" + this.fy
+        , 10, 150 + 30 * i);*/
      
         ctx.beginPath();
         ctx.arc(this.px, this.py, this.d/2, 0, Math.PI*2);

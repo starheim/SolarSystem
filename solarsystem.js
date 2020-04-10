@@ -3,7 +3,8 @@ var width;
 var height;
 var ctx;
 var bodies = [];
-var G = 1;
+var G = 0.1;
+var refreshRateMilliSeconds = 1; 
 
 function run(){
     canvas = document.getElementById("canvas");
@@ -13,26 +14,24 @@ function run(){
     canvas.height = height;
     ctx = canvas.getContext("2d");
 
-    ctx.font = "30px Comic Sans MS";
+    ctx.font = "20px Comic Sans MS";
     ctx.fillStyle = "white";
-
 
     createObjects();
 
-
-    
     setInterval(function(){
-        
-        drawObjects();
+        //ctx.fillText("REEEEE, WORK YOU SHIT", 10, 50); 
+        drawObjects(); 
         updateForcesOnObject();
-        updateObjectsPosition();
-        ctx.clearRect(0,0,width,height);
-    },10);
+        updatePositionOfObjects();
+        ctx.fillStyle = "black";
+        //ctx.clearRect(0,0,width,height);
+    },refreshRateMilliSeconds);
 }
 
 function createObjects(){
     //Instantiate solar system objects
-    bodies.push(new SolarSystemObject(width/2, height/2, 1600, 40, "yellow")); //The Sun
+    bodies.push(new SolarSystemObject(width/2, height/2, 16, 40, "yellow")); //The Sun
 
     bodies.push(new SolarSystemObject(width/2 - 50, height/2, 1, 5, "#cd7f32"));  //Mercury
     bodies.push(new SolarSystemObject(width/2 - 100, height/2, 10, 9, "orange"));   //Venus
@@ -49,7 +48,6 @@ function createObjects(){
 }
 
 function drawObjects(){
-    
     for(var i = 0; i < bodies.length; i++){
         bodies[i].drawObject(ctx, i);
     }
@@ -59,24 +57,25 @@ function updateForcesOnObject(){
     for(var i = 0; i < bodies.length; i++){
         bodies[i].fx=0;
 		bodies[i].fy=0;
-        for(var j = 0; j < bodies.length; i++){
-            if(i != j){
-                bodies[i].attraction(bodies[j]);
+        for(var n = 0; n < bodies.length; n++){
+            if(i != n){
+                bodies[i].attraction(bodies[n]);
             }
+            ctx.fillText("REEEEE, WORK YOU SHIT " + bodies.length, 10, 50); 
         }
     }
 }
 
-function updateObjectsPosition(){
+function updatePositionOfObjects(){
     for(var i = 0; i < bodies.length; i++){
         bodies[i].update();
     }
 }
 
 function SolarSystemObject(x, y, m, d, col){
-    this.m = m;
     this.px = x;
     this.py = y;
+    this.m = m;
     this.d = d;
     this.vx = 0;
     this.vy = 0;
@@ -103,11 +102,11 @@ function SolarSystemObject(x, y, m, d, col){
     };
 
     this.update = function(){
-        this.vx += (this.fx/this.m)*0.01;
-        this.vy += (this.fy/this.m)*0.01;
+        this.vx += (this.fx/this.m)*refreshRateMilliSeconds;
+        this.vy += (this.fy/this.m)*refreshRateMilliSeconds;
 
-        this.px += (this.vx * 0.01);
-        this.py += (this.vy * 0.01);
+        this.px += (this.vx * refreshRateMilliSeconds);
+        this.py += (this.vy * refreshRateMilliSeconds);
     };
 
     this.drawObject = function(ctx, i){

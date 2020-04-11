@@ -3,7 +3,7 @@ var width;
 var height;
 var ctx;
 var bodies = [];
-var G = 0.1;
+var G = 0.01;
 var refreshRateMilliSeconds = 1; 
 
 function run(){
@@ -35,20 +35,20 @@ function run(){
 
 function createObjects(){
     //Instantiate solar system objects
-    bodies.push(new SolarSystemObject(width/2, height/2, 1600, 40, "yellow")); //The Sun
+    bodies.push(new SolarSystemObject(width/2, height/2, 1600, 40, "yellow", "Sun")); //The Sun
 
-    bodies.push(new SolarSystemObject(width/2 - 50, height/2, 1, 5, "#cd7f32"));  //Mercury
-    bodies.push(new SolarSystemObject(width/2 - 100, height/2, 10, 9, "orange"));   //Venus
-    bodies.push(new SolarSystemObject(width/2 - 150, height/2, 20, 10, "blue"));   //Earth
-    bodies.push(new SolarSystemObject(width/2 - 225, height/2, 5, 5, "red"));   //Mars
-    bodies.push(new SolarSystemObject(width/2 - 400, height/2, 50, 15, "brown"));   //Jupiter
+    bodies.push(new SolarSystemObject(width/2 - 50, height/2, 0.1, 5, "#cd7f32", "Mercury"));  //Mercury
+    bodies.push(new SolarSystemObject(width/2 - 120, height/2, 2, 9, "orange", "Venus"));   //Venus
+    bodies.push(new SolarSystemObject(width/2 - 200, height/2, 3, 10, "blue", "Earth"));   //Earth
+    bodies.push(new SolarSystemObject(width/2 - 300, height/2, 5, 5, "red", "Mars"));   //Mars
+    bodies.push(new SolarSystemObject(width/2 - 450, height/2, 10, 15, "brown", "Jupiter"));   //Jupiter
     
     //Set initial velocity of planets
-    bodies[1].vy = 2;
-    bodies[2].vy = 1.5;
-    bodies[3].vy = 0.8;
-    bodies[4].vy = 0.7;
-    bodies[5].vy = 0.5;
+    bodies[1].vy = 0.6;
+    bodies[2].vy = 0.35;
+    bodies[3].vy = 0.28;
+    bodies[4].vy = 0.23;
+    bodies[5].vy = 0.2;
 }
 
 function drawObjects(){
@@ -75,7 +75,7 @@ function updatePositionOfObjects(){
     }
 }
 
-function SolarSystemObject(x, y, m, d, col){
+function SolarSystemObject(x, y, m, d, col, name){
     this.px = x;
     this.py = y;
     this.m = m;
@@ -85,6 +85,7 @@ function SolarSystemObject(x, y, m, d, col){
     this.fx = 0;
     this.fy = 0;
     this.col = col;
+    this.name = name;
 
     this.attraction = function(otherObject){ 
         var r = this.distance(otherObject);
@@ -110,7 +111,6 @@ function SolarSystemObject(x, y, m, d, col){
     };
 
     this.drawObject = function(ctx, i){
-
         //Stats about all objects in the system
         /*ctx.fillStyle = this.col;
         ctx.fillText("IS IT WORKING NOW???? " + 
@@ -127,6 +127,13 @@ function SolarSystemObject(x, y, m, d, col){
         ctx.stroke();
         ctx.fillStyle = this.col;
         ctx.fill();
-        
+
+        this.drawObjectInfo(ctx);        
+    };
+
+    this.drawObjectInfo = function(ctx){
+        ctx.fillStyle = "white";
+        ctx.font = "14px Comic Sans MS";
+        ctx.fillText(this.name, this.px + this.d, this.py + this.d);
     };
 }

@@ -13,16 +13,10 @@ function run(){
     canvas.width = width;
     canvas.height = height;
     ctx = canvas.getContext("2d");
-    //var background = new Image();
 
     createObjects();
 
     setInterval(function(){
-        /*background.src = "space.jpg";
-        background.onload = function(){
-            ctx.drawImage(background, 0, 0);
-        }*/
-
         ctx.fillStyle = "black";
         ctx.clearRect(0,0,width,height);
 
@@ -33,6 +27,11 @@ function run(){
         drawObjects(); 
         updateForcesOnObject();
         updatePositionOfObjects();
+        ctx.fillStyle = "white";
+        ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
+        ctx.fillText(getObjectFromName(bodies[3].name).vy, 100, 120);
+        ctx.fillText(getObjectFromName(bodies[3].name).vx, 100, 140);
+        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
 
     },refreshRateMilliSeconds);
 }
@@ -54,7 +53,6 @@ function createObjects(){
     
     bodies.push(new SolarSystemObject(width/2 - 213, height/2, 0.001, 3, "white", "Luna", "satelite"));   //The Moon
     
-
     //Set initial velocity of planets
     bodies[0].vy = -0.005;
     bodies[1].vy = 0.6;
@@ -68,8 +66,7 @@ function createObjects(){
     bodies[9].vy = 0.3;
     bodies[10].vy = 0.322;
 
-    getObjectFromName();
-
+    console.log(bodies.length + " objects initiated successfully.")
 }
 
 function drawObjects(){
@@ -96,10 +93,6 @@ function updatePositionOfObjects(){
     }
 }
 
-function getObjectFromName(){
-    for(var i = 0; i < bodies.length; i++){
-        ctx.fillStyle = "white";
-        ctx.fillText(bodies[i].name, 100, 100);
-    }
+function getObjectFromName(objectName){
+    return bodies.find(element => element.name == objectName);  
 }
-

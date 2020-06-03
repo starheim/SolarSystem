@@ -55,12 +55,26 @@ class SolarSystemObject{
         ctx.fillStyle = this.col;
         ctx.fill();
 
-        //this.drawObjectInfo(ctx);        
+        //this.drawObjectInfo(ctx);  
+        this.drawForceVector(ctx);      
     }
 
     drawObjectInfo(ctx){
         ctx.fillStyle = "white";
         ctx.font = "14px Lucida Console";
         ctx.fillText(this.name, this.px + this.d, this.py + this.d);
+    }
+
+    drawForceVector(ctx){
+        var angle = Math.atan2(this.fy, this.fx)
+        var vectorLength = 25;
+        ctx.beginPath();
+        ctx.moveTo(this.px, this.py);
+        ctx.lineTo(this.px + vectorLength*Math.cos(angle), this.py + vectorLength*Math.sin(angle));
+        //ctx.moveTo(this.px + this.r*Math.cos(angle), this.py + this.r*Math.sin(angle));
+        //ctx.lineTo(this.px + this.r*Math.cos(angle) + vectorLength*Math.cos(angle), this.py + this.r*Math.sin(angle) + vectorLength*Math.sin(angle));
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.strokeStyle = "black";
     }
 }

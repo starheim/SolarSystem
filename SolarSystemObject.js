@@ -55,6 +55,8 @@ class SolarSystemObject{
         ctx.fillStyle = this.col;
         ctx.fill();
 
+        //Test
+        
         //this.drawObjectInfo(ctx);  
         //this.drawForceVector(ctx);      
     }

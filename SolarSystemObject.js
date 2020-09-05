@@ -56,7 +56,7 @@ class SolarSystemObject{
         ctx.fill();
 
         //this.drawObjectInfo(ctx);  
-        this.drawForceVector(ctx);      
+        //this.drawForceVector(ctx);      
     }
 
     drawObjectInfo(ctx){
@@ -71,6 +71,7 @@ class SolarSystemObject{
         ctx.beginPath();
         ctx.moveTo(this.px, this.py);
         ctx.lineTo(this.px + vectorLength*Math.cos(angle), this.py + vectorLength*Math.sin(angle));
+        //Force vectors for the objects
         //ctx.moveTo(this.px + this.r*Math.cos(angle), this.py + this.r*Math.sin(angle));
         //ctx.lineTo(this.px + this.r*Math.cos(angle) + vectorLength*Math.cos(angle), this.py + this.r*Math.sin(angle) + vectorLength*Math.sin(angle));
         ctx.strokeStyle = "white";

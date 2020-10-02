@@ -1,6 +1,6 @@
 var canvas;
-var width;
-var height;
+var width = 1500;;
+var height = 1000;;
 var ctx;
 var bodies = [];
 var G = 0.01;
@@ -8,32 +8,31 @@ var refreshRateMilliSeconds = 1;
 
 function run(){
     canvas = document.getElementById("canvas");
-    width = 1500;
-    height = 1000;
     canvas.width = width;
     canvas.height = height;
     ctx = canvas.getContext("2d");
 
     createObjects();
 
-    setInterval(function(){
-        ctx.fillStyle = "black";
-        ctx.clearRect(0,0,width,height);
+    setInterval(updateFrame,refreshRateMilliSeconds);
+}
 
-        ctx.fillStyle = "orange";
-        ctx.font = "20px Lucida Console";
-        ctx.fillText("The Solar System", width/2-90, 50); 
+function updateFrame(){
+    ctx.fillStyle = "black";
+    ctx.clearRect(0,0,width,height);
 
-        drawObjects(); 
-        updateForcesOnObject();
-        updatePositionOfObjects();
-        ctx.fillStyle = "white";
-        ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
-        ctx.fillText(getObjectFromName(bodies[3].name).vy, 100, 120);
-        ctx.fillText(getObjectFromName(bodies[3].name).vx, 100, 140);
-        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
+    ctx.fillStyle = "orange";
+    ctx.font = "20px Lucida Console";
+    ctx.fillText("The Solar System", width/2-90, 50); 
 
-    },refreshRateMilliSeconds);
+    drawObjects(); 
+    updateForcesOnObject();
+    updatePositionOfObjects();
+    ctx.fillStyle = "white";
+    ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
+    ctx.fillText(getObjectFromName(bodies[3].name).vy, 100, 120);
+    ctx.fillText(getObjectFromName(bodies[3].name).vx, 100, 140);
+    ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
 }
 
 function createObjects(){

@@ -4,7 +4,9 @@ var height = 1000;;
 var ctx;
 var bodies = [];
 var G = 0.01;
-var refreshRateMilliSeconds = 1; 
+var refreshRateMilliSeconds = 1;
+var objectInfo = false;
+var pauseSimulation = false;
 
 function run(){
     canvas = document.getElementById("canvas");
@@ -13,26 +15,51 @@ function run(){
     ctx = canvas.getContext("2d");
 
     createObjects();
+    document.addEventListener("keydown", keyPush);
 
     setInterval(updateFrame,refreshRateMilliSeconds);
 }
 
-function updateFrame(){
-    ctx.fillStyle = "black";
-    ctx.clearRect(0,0,width,height);
+function keyPush(evt) {
+    switch(evt.keyCode){
+        case 66:
+            objectInfo = !objectInfo;
+            break;
+        case 80:
+            pauseSimulation = !pauseSimulation;
+            break;
+    }
+}
 
+function updateFrame(){
+    if(pauseSimulation == false){
+        ctx.fillStyle = "black";
+        ctx.clearRect(0,0,width,height);
+    
+        drawTitle();
+        drawPracticalInfo();
+        drawObjects();
+        updateForcesOnObject();
+        updatePositionOfObjects();
+        ctx.fillStyle = "white";
+        ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
+        ctx.fillText(getObjectFromName(bodies[3].name).vy, 100, 120);
+        ctx.fillText(getObjectFromName(bodies[3].name).vx, 100, 140);
+        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
+    }
+}
+
+function drawTitle(){
     ctx.fillStyle = "orange";
     ctx.font = "20px Lucida Console";
     ctx.fillText("The Solar System", width/2-90, 50); 
+}
 
-    drawObjects(); 
-    updateForcesOnObject();
-    updatePositionOfObjects();
-    ctx.fillStyle = "white";
-    ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
-    ctx.fillText(getObjectFromName(bodies[3].name).vy, 100, 120);
-    ctx.fillText(getObjectFromName(bodies[3].name).vx, 100, 140);
-    ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
+function drawPracticalInfo(){
+    ctx.fillStyle = "orange";
+    ctx.font = "14px Lucida Console";
+    ctx.fillText("Press B to toggle information about the solar system objects. Current status " + objectInfo, width/2-300, 80);
+    ctx.fillText("Press P to pause simualtion.", width/2-120, 120);
 }
 
 function createObjects(){
@@ -70,7 +97,10 @@ function createObjects(){
 
 function drawObjects(){
     for(var i = 0; i < bodies.length; i++){
-        bodies[i].drawObject(ctx, i);
+        bodies[i].drawObject(ctx);
+        if(objectInfo) {
+            
+        }
     }
 }
 

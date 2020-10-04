@@ -11,7 +11,6 @@ class SolarSystemObject{
         this.col = col;
         this.name = name;
         this.objectType = objectType;
-        this.previousPoints = [];
     }
 
     attraction(otherObject){ 
@@ -37,7 +36,7 @@ class SolarSystemObject{
         this.py += (this.vy * refreshRateMilliSeconds);
     }
 
-    drawObject(ctx, i){
+    drawObject(ctx){
         //Stats about all objects in the system
         /*ctx.fillStyle = this.col;
         ctx.fillText("IS IT WORKING NOW???? " + 

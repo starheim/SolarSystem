@@ -10,5 +10,7 @@ Further ideas:
  - Introduce spaceship
    - Must use energy to move
    - Can pick up energy and power ups
+ - Add possibility of changing object masses on the go
+ - Add objects 
    
  - Multiplayer?

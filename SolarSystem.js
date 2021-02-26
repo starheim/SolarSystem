@@ -222,14 +222,13 @@ function drawObjects() {
       //Stats about all objects in the system
       ctx.fillStyle = "white";
       ctx.fillText(
-        "Object: " +
           bodies[i].name +
           " mass: " +
           bodies[i].m +
           " diameter: " +
           bodies[i].d,
         10,
-        25 + 25 * i
+        25 + 20 * i
       );
 
       bodies[i].drawObjectInfo(ctx);

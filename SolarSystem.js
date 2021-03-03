@@ -2,7 +2,7 @@ var canvas;
 var width = 1500;
 var height = 1000;
 var ctx;
-var bodies = [];
+var solarSystemObjects = [];
 var G = 0.01;
 var refreshRateMilliSeconds = 1;
 var objectInfo = false;
@@ -31,6 +31,10 @@ function keyPush(evt) {
       break;
     case 70:
       forceVectors = !forceVectors;
+      break;
+    case 82:
+      solarSystemObjects = [];
+      createObjects();
       break;
   }
 }
@@ -62,13 +66,14 @@ function drawPracticalInfo() {
     width / 2 - 220,
     80
   );
-  ctx.fillText("Press F to toggle force vectors.", width / 2 - 110, 110);
-  ctx.fillText("Press P to pause simualtion.", width / 2 - 100, 140);
+  ctx.fillText("Press F to toggle force vectors.", width / 2 - 110, 105);
+  ctx.fillText("Press P to pause simualtion.", width / 2 - 100, 130);
+  ctx.fillText("Press R to reset simualtion.", width / 2 - 100, 155);
 }
 
 function createObjects() {
   //Instantiate solar system objects
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
       width / 2,
       height / 2,
@@ -80,7 +85,7 @@ function createObjects() {
     )
   ); //The Sun
 
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
       width / 2 - 50,
       height / 2,
@@ -91,7 +96,7 @@ function createObjects() {
       "planet"
     )
   ); //Mercury
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
       width / 2 - 120,
       height / 2,
@@ -102,7 +107,7 @@ function createObjects() {
       "planet"
     )
   ); //Venus
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
       width / 2 - 200,
       height / 2,
@@ -113,22 +118,22 @@ function createObjects() {
       "planet"
     )
   ); //Earth
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 300,
+      width / 2 - 270,
       height / 2,
-      5,
+      3,
       5,
       "red",
       "Mars",
       "planet"
     )
   ); //Mars
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
       width / 2 - 450,
       height / 2,
-      30,
+      120,
       15,
       "brown",
       "Jupiter",
@@ -136,9 +141,9 @@ function createObjects() {
     )
   ); //Jupiter
 
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 466,
+      width / 2 - 470,
       height / 2,
       0.001,
       3,
@@ -147,9 +152,9 @@ function createObjects() {
       "satelite"
     )
   ); //Io
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 470,
+      width / 2 - 475,
       height / 2,
       0.001,
       3,
@@ -158,9 +163,9 @@ function createObjects() {
       "satelite"
     )
   ); //Europa
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 475,
+      width / 2 - 478,
       height / 2,
       0.001,
       3,
@@ -169,9 +174,9 @@ function createObjects() {
       "satelite"
     )
   ); //Ganymede
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 478,
+      width / 2 - 480,
       height / 2,
       0.001,
       3,
@@ -181,9 +186,9 @@ function createObjects() {
     )
   ); //Callisto
 
-  bodies.push(
+  solarSystemObjects.push(
     new SolarSystemObject(
-      width / 2 - 213,
+      width / 2 - 212,
       height / 2,
       0.001,
       3,
@@ -194,69 +199,69 @@ function createObjects() {
   ); //The Moon
 
   //Set initial velocity of planets
-  bodies[0].vy = -0.005;
-  bodies[1].vy = 0.6;
-  bodies[2].vy = 0.35;
-  bodies[3].vy = 0.28;
-  bodies[4].vy = 0.23;
-  bodies[5].vy = 0.2;
-  bodies[6].vy = 0.33;
-  bodies[7].vy = 0.3;
-  bodies[8].vy = 0.3;
-  bodies[9].vy = 0.3;
-  bodies[10].vy = 0.322;
+  solarSystemObjects[0].vy = -0.012;
+  solarSystemObjects[1].vy = 0.6;
+  solarSystemObjects[2].vy = 0.35;
+  solarSystemObjects[3].vy = 0.28;
+  solarSystemObjects[4].vy = 0.23;
+  solarSystemObjects[5].vy = 0.2;
+  solarSystemObjects[6].vy = 0.41;
+  solarSystemObjects[7].vy = 0.4;
+  solarSystemObjects[8].vy = 0.37;
+  solarSystemObjects[9].vy = 0.37;
+  solarSystemObjects[10].vy = 0.33;
 
-  console.log(bodies.length + " objects initiated successfully.");
+  console.log(solarSystemObjects.length + " objects initiated successfully.");
 }
 
 function drawObjects() {
-  for (var i = 0; i < bodies.length; i++) {
-    bodies[i].drawObject(ctx);
+  for (var i = 0; i < solarSystemObjects.length; i++) {
+    solarSystemObjects[i].drawObject(ctx);
     if (objectInfo) {
-      /*ctx.fillStyle = "white";
+      ctx.fillStyle = "white";
         ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
         ctx.fillText("Velocity y-axis: " + getObjectFromName(bodies[3].name).vy, 100, 120);
         ctx.fillText("Velocity x-axis: " + getObjectFromName(bodies[3].name).vx, 100, 140);
-        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);*/
+        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
 
       //Stats about all objects in the system
       ctx.fillStyle = "white";
       ctx.fillText(
-          bodies[i].name +
+          solarSystemObjects[i].name +
           " mass: " +
-          bodies[i].m +
+          solarSystemObjects[i].m +
           " diameter: " +
-          bodies[i].d,
+          solarSystemObjects[i].d,
         10,
         25 + 20 * i
       );
 
-      bodies[i].drawObjectInfo(ctx);
+      solarSystemObjects[i].drawObjectInfo(ctx);
     }
     if (forceVectors) {
-      bodies[i].drawForceVector(ctx);
+      solarSystemObjects[i].drawForceVector(ctx);
     }
   }
 }
 
 function updateForcesOnObject() {
-  for (var i = 0; i < bodies.length; i++) {
-    bodies[i].fx = 0;
-    bodies[i].fy = 0;
-    for (var n = 0; n < bodies.length; n++) {
+  for (var i = 0; i < solarSystemObjects.length; i++) {
+    solarSystemObjects[i].fx = 0;
+    solarSystemObjects[i].fy = 0;
+    for (var n = 0; n < solarSystemObjects.length; n++) {
       if (i != n) {
-        bodies[i].attraction(bodies[n]);
+        solarSystemObjects[i].attraction(solarSystemObjects[n]);
       }
     }
   }
 }
 
 function updatePositionOfObjects() {
-  for (var i = 0; i < bodies.length; i++) {
-    bodies[i].update();
+  for (var i = 0; i < solarSystemObjects.length; i++) {
+    solarSystemObjects[i].update();
   }
 }
 
 function getObjectFromName(objectName) {
-  return bodies.find((element) => element.name == objectName);
+  return solarSystemObjects.find((element) => element.name == objectName);
 }

@@ -199,7 +199,7 @@ function createObjects() {
   ); //The Moon
 
   //Set initial velocity of planets
-  solarSystemObjects[0].vy = -0.012;
+  solarSystemObjects[0].vy = -0.01;
   solarSystemObjects[1].vy = 0.6;
   solarSystemObjects[2].vy = 0.35;
   solarSystemObjects[3].vy = 0.28;
@@ -218,11 +218,11 @@ function drawObjects() {
   for (var i = 0; i < solarSystemObjects.length; i++) {
     solarSystemObjects[i].drawObject(ctx);
     if (objectInfo) {
-      ctx.fillStyle = "white";
+      /*ctx.fillStyle = "white";
         ctx.fillText(getObjectFromName(bodies[3].name).name, 100, 100);
         ctx.fillText("Velocity y-axis: " + getObjectFromName(bodies[3].name).vy, 100, 120);
         ctx.fillText("Velocity x-axis: " + getObjectFromName(bodies[3].name).vx, 100, 140);
-        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);
+        ctx.fillText(getObjectFromName(bodies[3].name).m, 100, 160);*/
 
       //Stats about all objects in the system
       ctx.fillStyle = "white";

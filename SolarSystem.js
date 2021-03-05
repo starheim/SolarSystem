@@ -36,6 +36,10 @@ function keyPush(evt) {
       solarSystemObjects = [];
       createObjects();
       break;
+    case 83:
+      //solarSystemObjects = []
+      fillSolarSystemWithRandomObjects();
+      break;
   }
 }
 
@@ -67,8 +71,9 @@ function drawPracticalInfo() {
     80
   );
   ctx.fillText("Press F to toggle force vectors.", width / 2 - 110, 105);
-  ctx.fillText("Press P to pause simualtion.", width / 2 - 100, 130);
-  ctx.fillText("Press R to reset simualtion.", width / 2 - 100, 155);
+  ctx.fillText("Press P to pause simualtion.", width / 2 - 110, 130);
+  ctx.fillText("Press R to reset simualtion.", width / 2 - 110, 155);
+  ctx.fillText("Press S to fill simulation with 1000 random objects.", width / 2 - 110, 180);
 }
 
 function createObjects() {
@@ -212,6 +217,23 @@ function createObjects() {
   solarSystemObjects[10].vy = 0.33;
 
   console.log(solarSystemObjects.length + " objects initiated successfully.");
+}
+
+function fillSolarSystemWithRandomObjects() {
+  for (var i = 0; i < 1000; i++) {
+    solarSystemObjects.push(
+      new SolarSystemObject(
+        Math.floor(Math.random() * width),
+        Math.floor(Math.random() * height),
+        //Math.floor(Math.random() * 2) + 1,
+        0.001,
+        3,
+        "white",
+        "null",
+        "particle"
+      )
+    );
+  }
 }
 
 function drawObjects() {
